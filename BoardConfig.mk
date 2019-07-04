@@ -1,0 +1,133 @@
+# Device path
+LOCAL_PATH := device/samsung/on7xelte
+#######
+# CPU #
+#######
+# Architecture
+TARGET_ARCH := arm
+TARGET_CPU_ABI  := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_VARIANT := cortex-a53
+TARGET_ARCH_VARIANT := armv7-a-neon
+# ro.product.cpu.abi and ro.product.cpu.abi2 are obsolete,
+# use ro.product.cpu.abilist instead.
+TARGET_CPU_ABI_LIST_32_BIT := $(TARGET_CPU_ABI),$(TARGET_CPU_ABI2)
+TARGET_CPU_ABI_LIST := $(TARGET_CPU_ABI_LIST_32_BIT)
+
+# Platform
+TARGET_BOARD_PLATFORM := exynos5
+TARGET_BOARD_PLATFORM_GPU := mali-t830mp1
+##############
+# Bootloader #
+##############
+TARGET_NO_BOOTLOADER := true
+TARGET_BOOTLOADER_BOARD_NAME := universal7870
+##########
+# Kernel #
+##########
+# BOARD_KERNEL_OFFSET := 0x00008000
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+# BOARD_BOOTIMG_HEADER_VERSION := 1
+# BOARD_HEADER_SIZE := 1648
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_DT_SIZE := 245760
+BOARD_NAME := SRPPE16A000RU # 000RU = recovery kernel, 000KU = system kernel
+# BOARD_RECOVERY_DTBO_SIZE := 25165824
+# BOARD_RECOVERY_DTBO_OFFSET := 32403456 # int64_t
+# Kernel offsets
+BOARD_KERNEL_BASE := 0x10000000
+BOARD_RAMDISK_OFFSET := 0x01000000
+BOARD_SECOND_OFFSET := 0x00f00000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+
+# Kernel CMDLINE
+BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+# Prebuilt kernel
+TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/recovery.img-zImage
+TARGET_PREBUILT_DTB := $(LOCAL_PATH)/prebuilt/recovery.img-dt
+# Make boot image arguments
+BOARD_MKBOOTIMG_ARGS := --base $(BOARD_KERNEL_BASE) --ramdisk_offset $(BOARD_RAMDISK_OFFSET) --second_offset $(BOARD_SECOND_OFFSET) --tags_offset $(BOARD_KERNEL_TAGS_OFFSET)
+BOARD_MKBOOTIMG_ARGS += --dt $(TARGET_PREBUILT_DTB)
+
+# BOARD_CUSTOM_BOOTIMG_MK := 
+##########
+# System #
+##########
+TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
+
+#Partitions
+BOARD_FLASH_BLOCK_SIZE := 131072
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 38916000
+# BOARD_BOOTIMAGE_PARTITION_SIZE :=
+# BOARD_SYSTEMIMAGE_PARTITION_SIZE := 
+
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
+
+# Workaround for error copying vendor files to recovery ramdisk
+BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_COPY_OUT_VENDOR := vendor
+############
+# Recovery #
+############
+RECOVERY_VARIANT := twrp
+USE_OPENGL_RENDERER := true
+RECOVERY_SDCARD_ON_DATA := true
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+BOARD_HAS_NO_REAL_SDCARD := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
+TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/recovery.fstab
+
+# Recovery device modules
+TARGET_RECOVERY_DEVICE_MODULES += android.hardware.boot@1.0
+
+########
+# TWRP #
+########
+DEVICE_SCREEN_WIDTH := 1080
+DEVICE_SCREEN_HEIGHT := 2340
+TW_INPUT_BLACKLIST := "hbtp_vm"
+TW_NO_BATT_PERCENT := false
+TW_USE_TOOLBOX := true
+TW_IGNORE_MISC_WIPE_DATA := true
+TW_HAS_EDL_MODE := true
+TW_NO_REBOOT_BOOTLOADER := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_INCLUDE_NTFS_3G := true
+
+# Display
+TW_THEME := portrait_hdpi
+# DEVICE_RESOLUTION := 1080x2340 (deprecated)
+TW_DEFAULT_BRIGHTNESS := 188
+TW_MAX_BRIGHTNESS := 1023
+TW_Y_OFFSET := 80
+TW_H_OFFSET := -80
+TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel0-backlight/brightness"
+TW_NO_SCREEN_BLANK := true
+TW_NO_SCREEN_TIMEOUT := true
+
+# Locale
+TW_EXTRA_LANGUAGES := true
+TW_DEFAULT_LANGUAGE := en
+
+# Excludes
+TW_EXCLUDE_TWRPAPP := true
+
+#MTP
+TW_MTP_DEVICE := "/dev/mtp_usb"
+
+# Encryption
+PLATFORM_SECURITY_PATCH := 2018-12-01
+TW_INCLUDE_CRYPTO := true
+# TW_INCLUDE_CRYPTO_FBE := true
+# TW_INCLUDE_FBE := true
+
+# Debug
+TARGET_USES_LOGD := true
+TWRP_INCLUDE_LOGCAT := true
+
+# ifdef TARGET_PREBUILT_DTB
+# 	BOARD_MKBOOTIMG_ARGS += --dt $(TARGET_PREBUILT_DTB)
+# endif
