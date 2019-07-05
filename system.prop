@@ -1,4 +1,13 @@
+ro.sf.lcd_density=480
+
+ro.arch=exynos7870
+ro.chipname=exynos7870
+
 ro.product.brand=samsung
-ro.product.name=on7xeltedd
+ro.product.name=on7xelte
 ro.product.device=on7xelte
 ro.build.product=on7xelte
+
+
+# ro.product.first_api_level indicates the first api level the device has commercially launched on.
+ro.product.first_api_level=23
